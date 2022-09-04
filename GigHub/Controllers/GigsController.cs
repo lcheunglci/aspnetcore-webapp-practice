@@ -1,5 +1,6 @@
 ﻿using GigHub.Data;
 using GigHub.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GigHub.Controllers
@@ -13,6 +14,7 @@ namespace GigHub.Controllers
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             var viewModel = new GigFormViewModel()
