@@ -4,7 +4,6 @@ using GigHub.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace GigHub.Controllers
 {
@@ -33,16 +32,15 @@ namespace GigHub.Controllers
         [HttpPost]
         public IActionResult Create(GigFormViewModel viewModel)
         {
-            var artistId = _userManager.GetUserId(User);
-            var artist = _context.Users.Single(u => u.Id == artistId);
+
             var genre = _context.Genres.Single(g => g.Id == viewModel.Genre);
 
             // TODO: add validation for datetime
             var gig = new Gig
             {
-                Artist = artist,
+                ArtistId = _userManager.GetUserId(User),
                 DateTime = DateTime.Parse($"{viewModel.Date} {viewModel.Time}"),
-                Genre = genre,
+                GenreId = viewModel.Genre,
                 Venue = viewModel.Venue
             };
 
