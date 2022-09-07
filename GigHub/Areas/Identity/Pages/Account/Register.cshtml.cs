@@ -125,6 +125,7 @@ namespace GigHub.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                user.Name = Input.Name;
                 // TODO: not sure how to add the new Name property into the user from here.
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

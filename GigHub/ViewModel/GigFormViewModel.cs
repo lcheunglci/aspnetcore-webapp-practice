@@ -1,5 +1,6 @@
 ﻿using GigHub.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 
 namespace GigHub.ViewModel
 {

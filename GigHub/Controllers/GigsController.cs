@@ -33,6 +33,8 @@ namespace GigHub.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(GigFormViewModel viewModel)
         {
+            ModelState.Remove("Genres");
+
             if (!ModelState.IsValid)
             {
                 viewModel.Genres = _context.Genres.ToList();
