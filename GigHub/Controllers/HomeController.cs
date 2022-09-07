@@ -1,5 +1,7 @@
-﻿using GigHub.Models;
+﻿using GigHub.Data;
+using GigHub.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace GigHub.Controllers
@@ -8,14 +10,20 @@ namespace GigHub.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private ApplicationDbContext _context;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var upcomingGigs = _context.Gigs
+                .Include(g => g.Artist)
+                .Where(g=> g.DateTime > DateTime.Now);
+            return View(upcomingGigs);
         }
 
         public IActionResult Privacy()
