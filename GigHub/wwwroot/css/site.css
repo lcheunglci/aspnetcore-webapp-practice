@@ -18,6 +18,11 @@ body {
   font-size: 17px;
 }
 
+span.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
 /* Bootstrap Overrides */
 /* TODO: I don't think these navbar-inverse exists in the new default layout*/
 
