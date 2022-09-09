@@ -25,6 +25,28 @@ span.field-validation-error {
     font-weight: bold;
 }
 
+
+.voffset {
+    margin-top: 2px;
+}
+.voffset1 {
+    margin-top: 5px;
+}
+.voffset2 {
+    margin-top: 10px;
+}
+
+.voffset3 {
+    margin-top: 20px;
+}
+
+.voffset4 {
+    margin-top: 40px;
+}
+.voffset5 {
+    margin-top: 80px;
+}
+
 /* Bootstrap Overrides */
 /* TODO: I don't think these navbar-inverse exists in the new default layout*/
 
