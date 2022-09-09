@@ -2,9 +2,9 @@
 
 namespace GigHub.ViewModel
 {
-    public class HomeViewModel
+    public class GigsViewModel
     {
-        public IEnumerable<Gig> upcomingGigs { get; set; }
+        public IEnumerable<Gig> UpcomingGigs { get; set; }
         public bool ShowActions { get; set; }
     }
 }
