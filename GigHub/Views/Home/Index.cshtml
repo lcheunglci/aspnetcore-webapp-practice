@@ -14,6 +14,7 @@
                 <div class="day">@gig.DateTime.ToString("d ")</div>
             </div>
             <div class="details">
+                <button data-data-id="@gig.ArtistId" class="btn btn-link btn-sm pull-right js-toggle-follow" >Follow?</button>
                 <span class="artist">@gig.Artist.Name</span>
                 <span class="genre">@gig.Genre.Name</span>
                 <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right js-toggle-attendance">Going?</button>
@@ -37,6 +38,19 @@
                 .fail(function() {
                     alert("Something failed!");
                 });
+            });
+        })
+        $(document).ready(function () {
+            $(".js-toggle-follow").click(function () {
+                var button = $(e.target)
+                $.post("/api/followings", { "followeeId": button.attr("data-data-id") })
+                    .done(function () {
+                        button
+                            .text("Following");
+                    })
+                    .fail(function () {
+                        alert("Something failed!");
+                    });
             });
         })
     </script>
