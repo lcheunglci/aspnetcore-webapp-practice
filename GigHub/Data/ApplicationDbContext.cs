@@ -9,6 +9,7 @@ namespace GigHub.Data
         public DbSet<Gig> Gigs { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Following> Followings { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -33,6 +34,21 @@ namespace GigHub.Data
                 .WithMany()
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Following>()
+                .HasKey(nameof(Following.FollowerId), nameof(Following.FolloweeId));
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(u => u.Followers)
+                .WithOne(f => f.Followee)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(u => u.Followees)
+                .WithOne(f => f.Follower)
+                .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
