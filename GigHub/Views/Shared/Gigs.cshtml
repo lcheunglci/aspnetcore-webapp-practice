@@ -48,8 +48,7 @@
                     alert("Something failed!");
                 });
             });
-        })
-        $(document).ready(function () {
+
             $(".js-toggle-follow").click(function () {
                 var button = $(e.target)
                 $.post("/api/followings", { "followeeId": button.attr("data-data-id") })

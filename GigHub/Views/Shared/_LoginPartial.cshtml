@@ -14,7 +14,7 @@
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a>
             </li>
             <li><a class="dropdown-item" href="@Url.Action("Attending","Gigs")">Gigs I'm Going</a></li>
-            <li><a class="dropdown-item" href="#">Artist I'm Following</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("Index", "Followees")">Artist I'm Following</a></li>
             <li><hr class="dropdown-divider"></li>
             <li class="dropdown-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
