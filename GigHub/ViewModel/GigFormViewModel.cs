@@ -1,6 +1,5 @@
 ﻿using GigHub.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 namespace GigHub.ViewModel
 {
@@ -8,19 +7,22 @@ namespace GigHub.ViewModel
     {
         [Required]
         public string Venue { get; set; }
-        
+
         [Required]
         [FutureDate]
         public string Date { get; set; }
-        
+
         [Required]
         [ValidTime]
         public string Time { get; set; }
-        
+
         [Required]
         public byte Genre { get; set; }
 
         public IEnumerable<Genre> Genres { get; set; }
+
+        public string Heading { get; set; }
+
         public DateTime GetDateTime()
         {
             return DateTime.Parse($"{Date} {Time}");
