@@ -24,8 +24,10 @@ namespace GigHub.API
         public IActionResult Cancel(int id)
         {
             var userId = _userManager.GetUserId(User);
-
             var gig = _context.Gigs.Single(g => g.Id == id && g.ArtistId == userId);
+
+            if (gig.IsCanceled)
+                return NotFound();
 
             gig.IsCanceled = true;
             _context.SaveChanges();
