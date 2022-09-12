@@ -11,6 +11,9 @@ namespace GigHub.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Following> Followings { get; set; }
 
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -44,11 +47,21 @@ namespace GigHub.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
+
             builder.Entity<ApplicationUser>()
                 .HasMany(u => u.Followees)
                 .WithOne(f => f.Follower)
                 .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserNotification>()
+                .HasKey(nameof(UserNotification.NotificationId), nameof(UserNotification.UserId));
+
+            builder.Entity<Notification>()
+                .HasOne(n => n.Gig)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             base.OnModelCreating(builder);
         }
