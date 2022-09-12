@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GigHub.Models
 {
     public class Gig
     {
         public int Id { get; set; }
+
+        public bool IsCanceled { get; set; }
 
         public ApplicationUser Artist { get; set; }
 
