@@ -62,6 +62,10 @@ namespace GigHub.Data
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<UserNotification>()
+                .HasOne(n => n.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
