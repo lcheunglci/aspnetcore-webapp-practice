@@ -9,7 +9,7 @@
 {
     <p class="alert alert-info">All fields are <strong>required</strong>.</p>
     @Html.AntiForgeryToken()
-    @Html.HiddenForm(m => m.Id)
+    @Html.HiddenFor(m => m.Id)
     <div class="form-group">
         @Html.LabelFor(m => m.Venue)
         @Html.TextBoxFor(m => m.Venue, new { @class = "form-control", autofocus = "autofocus" })
