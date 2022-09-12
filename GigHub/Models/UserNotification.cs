@@ -7,11 +7,11 @@ namespace GigHub.Models
     {
         [Key]
         [Column(Order = 1)]
-        public int UserId { get; set; }
+        public int UserId { get; private set; }
 
         [Key]
         [Column(Order = 2)]
-        public int NotificationId { get; set; }
+        public int NotificationId { get; private set; }
 
         public ApplicationUser User { get; private set; }
 
