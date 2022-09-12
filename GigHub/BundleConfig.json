@@ -13,7 +13,8 @@
         "inputFiles": [
             "wwwroot/js/site.js",
             "wwwroot/lib/jquery/dist/jquery.js",
-            "wwwroot/lib/jquery/dist/jqueryvalidate.js"
+            "wwwroot/lib/jquery/dist/jqueryvalidate.js",
+            "wwwroot/lib/bootbox.min.js"
         ],
         // Optionally specify minification options
         "minify": {
