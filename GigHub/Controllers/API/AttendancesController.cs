@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GigHub.Controllers
+namespace GigHub.Controllers.API
 {
-
     [Route("api/attendances")]
     [ApiController]
     [Authorize]
