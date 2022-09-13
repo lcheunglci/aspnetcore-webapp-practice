@@ -34,7 +34,7 @@ namespace GigHub.Data
 
             builder.Entity<Attendance>()
                 .HasOne(a => a.Gig)
-                .WithMany()
+                .WithMany(g => g.Attendences)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -64,7 +64,7 @@ namespace GigHub.Data
 
             builder.Entity<UserNotification>()
                 .HasOne(n => n.User)
-                .WithMany()
+                .WithMany(u => u.UserNotifications)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
