@@ -7,7 +7,7 @@ namespace GigHub.Models
     {
         public int Id { get; set; }
 
-        public bool IsCanceled { get; set; }
+        public bool IsCanceled { get; private set; }
 
         public ApplicationUser Artist { get; set; }
 
@@ -28,6 +28,18 @@ namespace GigHub.Models
         public Gig()
         {
             Attendences = new Collection<Attendance>();
+        }
+
+        public void Cancel()
+        {
+            IsCanceled = true;
+
+            var notification = new Notification(NotificationType.GigCanceled, this);
+
+            foreach (var attendee in Attendences.Select(a => a.Attendee))
+            {
+                attendee.Notify(notification);
+            }
         }
     }
 
