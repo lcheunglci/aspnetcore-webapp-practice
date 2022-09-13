@@ -129,15 +129,17 @@ namespace GigHub.Controllers
                 return View("GigForm", viewModel);
             }
 
-            var genre = _context.Genres.Single(g => g.Id == viewModel.Genre);
+            var genre = _context.Genres
+                .Single(g => g.Id == viewModel.Genre);
 
             var userId = _userManager.GetUserId(User);
 
             // TODO: add validation for datetime
-            var gig = _context.Gigs.Single(g => (g.Id == viewModel.Id) && (g.ArtistId == userId));
-            gig.Venue = viewModel.Venue;
-            gig.DateTime = viewModel.GetDateTime();
-            gig.GenreId = viewModel.Genre;
+            var gig = _context.Gigs
+                .Include(g => g.Attendances.Select(a => a.Attendee))
+                .Single(g => (g.Id == viewModel.Id) && (g.ArtistId == userId));
+
+            gig.Modify(viewModel.Venue, viewModel.GetDateTime(), viewModel.Genre);
 
             _context.SaveChanges();
 
