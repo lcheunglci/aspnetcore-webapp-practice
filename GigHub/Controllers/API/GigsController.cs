@@ -2,6 +2,7 @@
 using GigHub.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Web.Http;
 
 namespace GigHub.API
@@ -24,7 +25,9 @@ namespace GigHub.API
         public IActionResult Cancel(int id)
         {
             var userId = _userManager.GetUserId(User);
-            var gig = _context.Gigs.Single(g => g.Id == id && g.ArtistId == userId);
+            var gig = _context.Gigs
+                .Include(g => g.Attendences.Select(a => a.Attendee))
+                .Single(g => g.Id == id && g.ArtistId == userId);
 
             if (gig.IsCanceled)
                 return NotFound();
@@ -33,15 +36,9 @@ namespace GigHub.API
 
             var notification = new Notification(NotificationType.GigCanceled, gig);
 
-            var attendees = _context.Attendances
-                .Where(a => a.GigId == gig.Id)
-                .Select(a => a.Attendee)
-                .ToList();
-
-            foreach (var attendee in attendees)
+            foreach (var attendee in gig.Attendences.Select(a => a.Attendee))
             {
                 attendee.Notify(notification);
-
             }
 
             _context.SaveChanges();
