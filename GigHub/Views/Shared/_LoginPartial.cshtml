@@ -8,8 +8,7 @@
     <li class="notification">
         <a href="#">
             <i class="bi bi-globe"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    2
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger js-notifications-count hide">
                 </span>
         </a>
     </li>
@@ -22,7 +21,7 @@
             <li class="nav-item">
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a>
             </li>
-            <li><a class="dropdown-item" href="@Url.Action("Mine","Gigs")">Gigs I'm Going</a></li>
+            <li><a class="dropdown-item" href="@Url.Action("Mine","Gigs")">My Upcoming Gigs</a></li>
             <li><a class="dropdown-item" href="@Url.Action("Attending","Gigs")">Gigs I'm Going</a></li>
             <li><a class="dropdown-item" href="@Url.Action("Index", "Followees")">Artist I'm Following</a></li>
             <li><hr class="dropdown-divider"></li>

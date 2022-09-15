@@ -40,10 +40,11 @@ namespace GigHub.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var gigs = _context.Attendances
+                .Include(a => a.Gig)
+                .Include(g => g.Gig.Genre)
+                .Include(g => g.Gig.Artist)
                 .Where(a => a.AttendeeId == userId)
                 .Select(a => a.Gig)
-                .Include(g => g.Artist)
-                .Include(g => g.Genre)
                 .ToList();
 
             var viewModel = new GigsViewModel

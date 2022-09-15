@@ -30,9 +30,11 @@ namespace GigHub.Controllers.API
         {
             var userId = _userManager.GetUserId(User);
             var notifications = _context.UserNotifications
+                .Include(un => un.Notification)
+                .ThenInclude(n => n.Gig)
+                .ThenInclude(g => g.Artist)
                 .Where(un => un.UserId == userId && !un.IsRead)
                 .Select(un => un.Notification)
-                .Include(n => n.Gig.Artist)
                 .ToList();
 
             // note we are not invoking Map, but passing a reference to it

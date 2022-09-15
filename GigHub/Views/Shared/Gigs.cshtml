@@ -42,15 +42,28 @@
 @section scripts
 {
     <script>
+        $.postJSON = function (url, data, callback) {
+            return jQuery.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                'type': 'POST',
+                'url': url,
+                'data': JSON.stringify(data),
+                'dataType': 'json',
+                'success': callback
+            });
+        };
+
         $(document).ready(function() {
             $(".js-toggle-attendance").click(function() {
-                var button = $(e.target)
-                $.post("/api/attendances", { "gigId" : button.attr("data-gig-id")})
-                .done(function(){
-                    button
-                    .removeClass("btn-default")
-                    .addClass("btn-info")
-                    .text("Going");
+                var button = $(event.target)
+                $.postJSON("/api/attendances", { "gigId": button.attr("data-gig-id") }, 
+                    function(){
+                    button.removeClass("btn-default")
+                        .addClass("btn-info")
+                        .text("Going");
                 })
                 .fail(function() {
                     alert("Something failed!");
@@ -58,11 +71,10 @@
             });
 
             $(".js-toggle-follow").click(function () {
-                var button = $(e.target)
-                $.post("/api/followings", { "followeeId": button.attr("data-data-id") })
-                    .done(function () {
-                        button
-                            .text("Following");
+                var button = $(event.target)
+                $.postJSON("/api/followings", { "followeeId": button.attr("data-data-id") }, 
+                    function () {
+                        button.text("Following");
                     })
                     .fail(function () {
                         alert("Something failed!");

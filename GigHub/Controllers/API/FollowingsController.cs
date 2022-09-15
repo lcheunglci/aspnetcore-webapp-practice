@@ -26,7 +26,7 @@ namespace GigHub.Controllers.API
         {
             var userId = _userManager.GetUserId(User);
 
-            if (_context.Followings.Any(f => f.FolloweeId == userId && f.FolloweeId == dto.FolloweeId))
+            if (_context.Followings.Any(f => f.FolloweeId == userId || f.FolloweeId == dto.FolloweeId))
             {
                 return BadRequest("Following already exists.");
             }
