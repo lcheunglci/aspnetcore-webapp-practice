@@ -16,11 +16,13 @@ namespace GigHub.Controllers.API
     {
         private ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
+        private IMapper _mapper;
 
-        public NotificationsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public NotificationsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
-            _context = context;
-            _userManager = userManager;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
@@ -33,17 +35,8 @@ namespace GigHub.Controllers.API
                 .Include(n => n.Gig.Artist)
                 .ToList();
 
-            var config = new MapperConfiguration(config =>
-            {
-                config.CreateMap<ApplicationUser, UserDto>();
-                config.CreateMap<Gig, GigDto>();
-                config.CreateMap<Notification, NotificationDto>();
-            });
-
-            var mapper = config.CreateMapper();
-
             // note we are not invoking Map, but passing a reference to it
-            return notifications.Select(mapper.Map<Notification, NotificationDto>);
+            return notifications.Select(_mapper.Map<Notification, NotificationDto>);
         }
     }
 }
