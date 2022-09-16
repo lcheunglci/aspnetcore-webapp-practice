@@ -48,6 +48,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.4/underscore-umd-min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script>
         $(document).ready(function() {
@@ -63,7 +64,9 @@
                 html: true,
                 title: "Notifications",
                 content: function () {
-                    return "hello world!"
+                    var compiled = _.template("Hello <%= name %>");
+                    var html = compiled({ name: "Law"});
+                    return html;
                 },
                 placement: "bottom"
             })
