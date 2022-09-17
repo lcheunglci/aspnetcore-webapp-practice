@@ -51,11 +51,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.4/underscore-umd-min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script type="text/x-template" id="notifications-template">
-        <ul>
+        <ul class="notifications">
             <% 
                 _.each(notifications, function(notification){
                     if (notification.type == 1) { %>
-                        <li><%= notification.gig.artist.name %> has canceled the gig at <%= notification.gig.venue %> at <%= notification.gig.dateTime %>. </li>
+                        <li><span class="highlight"><%= notification.gig.artist.name %></span> has canceled the gig at <%= notification.gig.venue %> at <%= notification.gig.dateTime %>. </li>
                     <% }
                     else if (notification.type == 2) {
                         var changes = [], originalValues = [], newValues = [];
@@ -72,7 +72,7 @@
                             newValues.push(notification.gig.dateTime);
                         }
                         %>
-                        <li><%= notification.gig.artist.name %> has changed the <%= changes.join(' and ') %> of the gig from <%= originalValues.join('/') %> to <%= newValues.join('/') %>. </li>
+                        <li><span class="highlight"><%= notification.gig.artist.name %></span> has changed the <%= changes.join(' and ') %> of the gig from <%= originalValues.join('/') %> to <%= newValues.join('/') %>. </li>
                     <% }
 
                     }
@@ -99,7 +99,8 @@
                         var compiled = _.template($("#notifications-template").html());
                         return compiled({ notifications: notifications });
                     },
-                    placement: "bottom"
+                    placement: "bottom",
+                    template: '	' < div class= "popover popover-notifications" role="popover" > <div class="popover-arrow"> </div><div class="popover-inner"></div > </div>''
                 })
             });
         });
