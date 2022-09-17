@@ -15,8 +15,8 @@
             "wwwroot/lib/jquery/dist/jquery.js",
             "wwwroot/lib/jquery/dist/jqueryvalidate.js",
             "wwwroot/lib/bootbox.min.js",
-            "wwwroot/lib/underscore-esm-min.js"
-
+            "wwwroot/lib/underscore-esm-min.js",
+            "wwwroot/lib/moment.js"
         ],
         // Optionally specify minification options
         "minify": {
