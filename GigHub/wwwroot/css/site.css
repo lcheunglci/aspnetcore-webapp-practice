@@ -54,6 +54,11 @@ span.field-validation-error {
     background-color: #ff4342;
 }*/
 
+.popover {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
 .navbar-inverse {
     background-color: #ff4342;
     border-color: #ff4342;
