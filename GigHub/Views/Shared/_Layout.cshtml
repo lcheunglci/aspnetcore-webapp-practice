@@ -101,6 +101,13 @@
                     },
                     placement: "bottom",
                     template: '	' < div class= "popover popover-notifications" role="popover" > <div class="popover-arrow"> </div><div class="popover-inner"></div > </div>''
+                }).on("shown.bs.popover", function() {
+                    $.post("/api/notifications/markAsRead")
+                        .done(function () {
+                            $(".js-notifications-count")
+                                .text("")
+                                .addClass("invisible")
+                        })
                 })
             });
         });

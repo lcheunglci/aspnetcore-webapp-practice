@@ -40,5 +40,21 @@ namespace GigHub.Controllers.API
             // note we are not invoking Map, but passing a reference to it
             return notifications.Select(_mapper.Map<Notification, NotificationDto>);
         }
+
+        [HttpPost("markAsRead")]
+        public IActionResult MarkAsRead()
+        {
+            var userId = _userManager.GetUserId(User);
+            var notifications = _context.UserNotifications
+                .Where(un => un.UserId == userId && !un.IsRead)
+                .ToList();
+
+            notifications.ForEach(n => n.Read());
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
     }
 }
