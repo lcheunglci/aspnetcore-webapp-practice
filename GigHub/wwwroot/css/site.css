@@ -85,15 +85,18 @@ h1,
 }
 .form-control {
   font-size: 17px;
+  height: 44px;
   padding: 20px 15px;
   -ms-border-radius: 9px;
   border-radius: 9px;
-}
-.form-control {
   border-color: #2196f3;
-  height: 44px;
   box-shadow: none;
   -webkit-box-shadow: none;
+  transition: none;
+  -webkit-transition: none;
+}
+.form-control:focus {
+  box-shadow: none;
 }
 .btn {
   /*font-size: 17px;
@@ -175,5 +178,8 @@ navbar-brand {
   font-weight: bold;
 }
 #searchGigs {
-  width: 300px;
+  width: 400px;
+}
+#searchGigs input {
+  max-width: none;
 }

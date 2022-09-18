@@ -93,16 +93,19 @@ body, h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 .form-control {
     font-size: 17px;
+    height: 44px;
     padding: 20px 15px;
     -ms-border-radius: 9px;
     border-radius: 9px;
-}
-
-.form-control {
     border-color: #2196f3;
-    height: 44px;
     box-shadow: none;
     -webkit-box-shadow: none;
+    transition: none;
+    -webkit-transition: none;
+}
+
+.form-control:focus {
+    box-shadow: none;
 }
 
 .btn {
@@ -212,5 +215,9 @@ navbar-brand {
 }
 
 #searchGigs {
-    width: 300px;
+    width: 400px;
+
+    input {
+        max-width: none;
+    }
 }
