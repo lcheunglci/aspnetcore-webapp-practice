@@ -77,15 +77,33 @@
         $(document).ready(function() {
             $(".js-toggle-attendance").click(function() {
                 var button = $(event.target)
-                $.postJSON("/api/attendances", { "gigId": button.attr("data-gig-id") }, 
-                    function(){
-                    button.removeClass("btn-default")
-                        .addClass("btn-info")
-                        .text("Going");
-                })
-                .fail(function() {
-                    alert("Something failed!");
-                });
+                if (button.hasClass("btn-default"))
+                {
+                    $.postJSON("/api/attendances", { "gigId": button.attr("data-gig-id") },
+                        function () {
+                            button.removeClass("btn-default")
+                                .addClass("btn-info")
+                                .text("Going");
+                        })
+                        .fail(function () {
+                            alert("Something failed!");
+                        });
+                }
+                else
+                {
+                    $.ajax({
+                        url: "/api/attendances/" + button.attr("data-gig-id"),
+                        method: "DELETE"
+                    })
+                        .done(function() {
+                            .button.removeClass("btn-info")
+                            .addClass("btn-default")
+                            .text("Going?");
+                        })
+                        .fail(function() {
+                            alert("Something failed.");
+                        })
+                }
             });
 
             $(".js-toggle-follow").click(function () {
