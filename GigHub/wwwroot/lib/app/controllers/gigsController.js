@@ -1,0 +1,47 @@
+﻿
+var GigsController = function (attendanceService) {
+    var button;
+
+    $.postJSON = function (url, data, callback) {
+        return jQuery.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'type': 'POST',
+            'url': url,
+            'data': JSON.stringify(data),
+            'dataType': 'json',
+            'success': callback
+        });
+    };
+
+    var init = function (container) {
+        $(container).on("click"), ".js-toggle-attendance", toggleAttendance);
+    };
+
+    var toggleAttendance = function (e) {
+        button = $(event.target);
+
+        var gigId = button.attr("data-gig-id");
+
+        if (button.hasClass("btn-default")) {
+            attendanceService.createAttendance(gigId, done, fail);
+        } else {
+            attendanceService.deleteAttendance(gigId, done, fail);
+        }
+    }
+
+    var done = function () {
+        var text = (button.text() == "Going") ? "Going?" : "Going";
+        button.toggleClass("btn-info").toggleClass("btn-defailt").text(text);
+    }
+
+    var fail = function () {
+        alert("Something failed.");
+    }
+
+    return {
+        init: init
+    }
+}(AttendanceService);
