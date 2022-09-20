@@ -39,28 +39,35 @@ namespace GigHub.Controllers
         public IActionResult Attending()
         {
             var userId = _userManager.GetUserId(User);
-            var gigs = _context.Attendances
+
+
+            var viewModel = new GigsViewModel
+            {
+                UpcomingGigs = GetGigsUserAttending(userId),
+                ShowActions = User.Identity.IsAuthenticated,
+                Heading = "Gigs I'm Attending",
+                Attendances = GetFutureAttendances(userId).ToLookup(a => a.GigId)
+            };
+
+            return View("Gigs", viewModel);
+        }
+
+        private List<Attendance> GetFutureAttendances(string userId)
+        {
+            return _context.Attendances
+                            .Where(a => a.AttendeeId == userId && a.Gig.DateTime > DateTime.Now)
+                            .ToList();
+        }
+
+        private List<Gig> GetGigsUserAttending(string userId)
+        {
+            return _context.Attendances
                 .Include(a => a.Gig)
                 .Include(g => g.Gig.Genre)
                 .Include(g => g.Gig.Artist)
                 .Where(a => a.AttendeeId == userId)
                 .Select(a => a.Gig)
                 .ToList();
-
-            var attendences = _context.Attendances
-                .Where(a => a.AttendeeId == userId && a.Gig.DateTime > DateTime.Now)
-                .ToList()
-                .ToLookup(a => a.GigId);
-
-            var viewModel = new GigsViewModel
-            {
-                UpcomingGigs = gigs,
-                ShowActions = User.Identity.IsAuthenticated,
-                Heading = "Gigs I'm Attending",
-                Attendances = attendences
-            };
-
-            return View("Gigs", viewModel);
         }
 
         [Authorize]
