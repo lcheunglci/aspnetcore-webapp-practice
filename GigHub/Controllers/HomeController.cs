@@ -1,5 +1,6 @@
 ﻿using GigHub.Data;
 using GigHub.Models;
+using GigHub.Repositories;
 using GigHub.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,13 @@ namespace GigHub.Controllers
         private UserManager<ApplicationUser> _userManager;
 
         private ApplicationDbContext _context;
+        private readonly AttendanceRepositroy _attendanceRepositroy;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _attendanceRepositroy = new AttendanceRepositroy(_context);
         }
 
         public IActionResult Index(string query = null)
@@ -40,9 +43,7 @@ namespace GigHub.Controllers
 
             var userId = _userManager.GetUserId(User);
 
-            var attendences = _context.Attendances
-                .Where(a => a.AttendeeId == userId && a.Gig.DateTime > DateTime.Now)
-                .ToList()
+            var attendences = _attendanceRepositroy.GetFutureAttendances(userId)
                 .ToLookup(a => a.GigId);
 
             var viewModel = new GigsViewModel
