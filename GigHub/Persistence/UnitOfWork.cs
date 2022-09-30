@@ -7,19 +7,19 @@ namespace GigHub.Persistence
     {
         ApplicationDbContext _context;
 
-        public GigRepository Gig { get; private set; }
-        public AttendanceRepositroy Attendance { get; private set; }
-        public FollowingRepository Following { get; private set; }
-        public GenreRepository Genre { get; private set; }
+        public GigRepository Gigs { get; private set; }
+        public AttendanceRepositroy Attendances { get; private set; }
+        public FollowingRepository Followings { get; private set; }
+        public GenreRepository Genres { get; private set; }
 
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            Gig = new GigRepository(_context);
-            Attendance = new AttendanceRepositroy(_context);
-            Following = new FollowingRepository(_context);
-            Genre = new GenreRepository(_context);
+            Gigs = new GigRepository(_context);
+            Attendances = new AttendanceRepositroy(_context);
+            Followings = new FollowingRepository(_context);
+            Genres = new GenreRepository(_context);
 
         }
 
