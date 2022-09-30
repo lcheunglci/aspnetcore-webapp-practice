@@ -3,7 +3,7 @@ using GigHub.Models;
 
 namespace GigHub.Repositories
 {
-    public class AttendanceRepositroy
+    public class AttendanceRepositroy : IAttendanceRepositroy
     {
         private readonly ApplicationDbContext _context;
 

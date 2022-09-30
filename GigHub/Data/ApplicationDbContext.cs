@@ -15,6 +15,11 @@ namespace GigHub.Data
         public DbSet<UserNotification> UserNotifications { get; set; }
 
 
+        public ApplicationDbContext()
+        {
+
+        }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

@@ -3,7 +3,7 @@ using GigHub.Models;
 
 namespace GigHub.Repositories
 {
-    public class FollowingRepository
+    public class FollowingRepository : IFollowingRepository
     {
         ApplicationDbContext _context;
 
