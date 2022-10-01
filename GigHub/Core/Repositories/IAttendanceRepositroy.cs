@@ -1,6 +1,6 @@
 ﻿using GigHub.Models;
 
-namespace GigHub.Repositories
+namespace GigHub.Core.Repositories
 {
     public interface IAttendanceRepositroy
     {
