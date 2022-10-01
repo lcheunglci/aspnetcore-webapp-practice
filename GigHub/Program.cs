@@ -1,5 +1,7 @@
 using GigHub.Data;
 using GigHub.Models;
+using GigHub.Persistence;
+using GigHub.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
@@ -25,6 +27,13 @@ builder.Services.AddControllersWithViews()
         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
     });
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAttendanceRepositroy, AttendanceRepositroy>();
+builder.Services.AddScoped<IFollowingRepository, FollowingRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<IGigRepository, GigRepository>();
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

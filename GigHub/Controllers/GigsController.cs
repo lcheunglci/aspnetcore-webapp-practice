@@ -1,5 +1,4 @@
-﻿using GigHub.Data;
-using GigHub.Models;
+﻿using GigHub.Models;
 using GigHub.Persistence;
 using GigHub.ViewModel;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +12,10 @@ namespace GigHub.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public GigsController(UserManager<ApplicationUser> userManager)
+        public GigsController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         [Authorize]
