@@ -29,7 +29,7 @@ builder.Services.AddControllersWithViews()
     });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IAttendanceRepositroy, AttendanceRepositroy>();
+builder.Services.AddScoped<IAttendanceRepository, AttendanceRepositroy>();
 builder.Services.AddScoped<IFollowingRepository, FollowingRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGigRepository, GigRepository>();

@@ -2,7 +2,7 @@
 
 namespace GigHub.Core.Repositories
 {
-    public interface IAttendanceRepositroy
+    public interface IAttendanceRepository
     {
         Attendance GetAttendance(int gigId, string userId);
         IEnumerable<Attendance> GetFutureAttendances(string userId);

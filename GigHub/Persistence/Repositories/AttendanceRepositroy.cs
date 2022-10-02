@@ -4,7 +4,7 @@ using GigHub.Persistence;
 
 namespace GigHub.Repositories
 {
-    public class AttendanceRepositroy : IAttendanceRepositroy
+    public class AttendanceRepositroy : IAttendanceRepository
     {
         private readonly ApplicationDbContext _context;
 
