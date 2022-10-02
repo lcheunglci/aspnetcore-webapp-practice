@@ -34,6 +34,21 @@ namespace GigHub.Persistence
             //        table.GigId
             //    });
 
+            builder.Entity<Gig>()
+                .Property(g => g.ArtistId)
+                .IsRequired();
+
+
+            builder.Entity<Gig>()
+                .Property(g => g.Venue)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            builder.Entity<Gig>()
+                .Property(g => g.GenreId)
+                .IsRequired();
+
+
             builder.Entity<Attendance>()
                 .HasKey(nameof(Attendance.GigId), nameof(Attendance.AttendeeId));
 
