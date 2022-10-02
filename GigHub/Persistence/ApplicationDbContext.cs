@@ -1,4 +1,5 @@
 ﻿using GigHub.Models;
+using GigHub.Persistence.EntityConfigurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,19 +35,7 @@ namespace GigHub.Persistence
             //        table.GigId
             //    });
 
-            builder.Entity<Gig>()
-                .Property(g => g.ArtistId)
-                .IsRequired();
-
-
-            builder.Entity<Gig>()
-                .Property(g => g.Venue)
-                .IsRequired()
-                .HasMaxLength(255);
-
-            builder.Entity<Gig>()
-                .Property(g => g.GenreId)
-                .IsRequired();
+            builder.ApplyConfiguration(new GigConfiguration());
 
 
             builder.Entity<Attendance>()
