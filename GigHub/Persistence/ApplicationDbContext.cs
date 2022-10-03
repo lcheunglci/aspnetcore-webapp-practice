@@ -36,6 +36,12 @@ namespace GigHub.Persistence
             //    });
 
             builder.ApplyConfiguration(new GigConfiguration());
+            builder.ApplyConfiguration(new GenreConfiguration());
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new AttendanceConfiguration());
+            builder.ApplyConfiguration(new FollowingConfiguration());
+            builder.ApplyConfiguration(new NotificationConfiguration());
+            builder.ApplyConfiguration(new UserNotificationConfiguration());
 
 
             builder.Entity<Attendance>()
