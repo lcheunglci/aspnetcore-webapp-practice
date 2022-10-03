@@ -15,7 +15,7 @@ namespace GigHub.API
         private ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
 
-        public GigsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public GigsController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _context = context;
             _userManager = userManager;
