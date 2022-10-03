@@ -15,6 +15,12 @@ namespace GigHub.Persistence.EntityConfigurations
                 .HasColumnOrder(1);
             builder.Property(u => u.NotificationId)
                 .HasColumnOrder(2);
+
+            builder.HasKey(nameof(UserNotification.NotificationId), nameof(UserNotification.UserId));
+
+            builder.HasOne(n => n.User)
+                .WithMany(u => u.UserNotifications)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

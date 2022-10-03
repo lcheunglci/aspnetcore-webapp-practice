@@ -10,6 +10,10 @@ namespace GigHub.Persistence.EntityConfigurations
         {
             builder.Property(n => n.Gig)
                 .IsRequired();
+
+            builder.HasOne(n => n.Gig)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

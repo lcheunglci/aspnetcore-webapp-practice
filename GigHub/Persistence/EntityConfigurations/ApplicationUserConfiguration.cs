@@ -11,6 +11,18 @@ namespace GigHub.Persistence.EntityConfigurations
             builder.Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+
+            builder.HasMany(u => u.Followers)
+                .WithOne(f => f.Followee)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.HasMany(u => u.Followees)
+                .WithOne(f => f.Follower)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

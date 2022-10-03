@@ -17,6 +17,13 @@ namespace GigHub.Persistence.EntityConfigurations
             builder.Property(a => a.AttendeeId)
                 .HasColumnOrder(2);
 
+
+            builder.HasKey(nameof(Attendance.GigId), nameof(Attendance.AttendeeId));
+
+            builder.HasOne(a => a.Gig)
+                .WithMany(a => a.Attendances)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

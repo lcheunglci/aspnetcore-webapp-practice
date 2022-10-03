@@ -16,6 +16,9 @@ namespace GigHub.Persistence.EntityConfigurations
 
             builder.Property(f => f.FolloweeId)
                 .HasColumnOrder(2);
+
+            builder.HasKey(nameof(Following.FollowerId), nameof(Following.FolloweeId));
+
         }
     }
 }
