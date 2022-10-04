@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using GigHub.API;
+using GigHub.Core.Models;
 using GigHub.Core.Repositories;
-using GigHub.Models;
 using GigHub.Tests.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -19,12 +19,12 @@ namespace GigHub.Tests.Controllers.API
             _mockRepository = new Mock<IGigRepository>();
 
 
-            var unitOfWOrkMock = new Mock<IUnitOfWork>();
-            unitOfWOrkMock.SetupGet(u => u.Gigs).Returns(_mockRepository.Object);
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            unitOfWorkMock.SetupGet(u => u.Gigs).Returns(_mockRepository.Object);
 
             var userManagerMock = ApiControllerExtensions.MockUserManager<ApplicationUser>(ApiControllerExtensions.s_users);
 
-            _controller = new GigsController(userManagerMock.Object, unitOfWOrkMock.Object);
+            _controller = new GigsController(userManagerMock.Object, unitOfWorkMock.Object);
 
             _controller.MockCurrentUser(_userId, "user1@domain.com");
 
