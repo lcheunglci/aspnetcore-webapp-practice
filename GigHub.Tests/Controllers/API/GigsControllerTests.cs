@@ -13,14 +13,15 @@ namespace GigHub.Tests.Controllers.API
 
 
         private GigsController _controller;
+        private Mock<IGigRepository> _mockRepository;
 
         public GigsControllerTests()
         {
-            var mockRepository = new Mock<IGigRepository>();
+            _mockRepository = new Mock<IGigRepository>();
 
 
             var unitOfWOrkMock = new Mock<IUnitOfWork>();
-            unitOfWOrkMock.SetupGet(u => u.Gigs).Returns(mockRepository.Object);
+            unitOfWOrkMock.SetupGet(u => u.Gigs).Returns(_mockRepository.Object);
 
             var userManagerMock = ApiControllerExtensions.MockUserManager<ApplicationUser>(ApiControllerExtensions.s_users);
 
@@ -33,6 +34,19 @@ namespace GigHub.Tests.Controllers.API
         [Fact]
         public void Cancel_NoGigWithGivenIdExists_ShouldReturnNotFound()
         {
+            var result = _controller.Cancel(1);
+
+            result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public void Cancel_GigIsCanceled_ShouldReturnNotFound()
+        {
+            var gig = new Gig();
+            gig.Cancel();
+
+            _mockRepository.Setup(r => r.GetGigWithAttendees(1)).Returns(gig);
+
             var result = _controller.Cancel(1);
 
             result.Should().BeOfType<NotFoundResult>();
