@@ -1,4 +1,4 @@
-﻿using GigHub.Models;
+﻿using GigHub.Core.Models;
 using GigHub.Persistence.EntityConfigurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

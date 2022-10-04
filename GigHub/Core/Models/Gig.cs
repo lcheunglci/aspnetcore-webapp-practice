@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace GigHub.Models
+namespace GigHub.Core.Models
 {
     public class Gig
     {

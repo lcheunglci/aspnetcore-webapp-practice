@@ -1,5 +1,5 @@
-﻿using GigHub.Dtos;
-using GigHub.Models;
+﻿using GigHub.Core.Dtos;
+using GigHub.Core.Models;
 using GigHub.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

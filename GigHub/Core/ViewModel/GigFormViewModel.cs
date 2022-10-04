@@ -1,5 +1,5 @@
 ﻿using GigHub.Controllers;
-using GigHub.Models;
+using GigHub.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
