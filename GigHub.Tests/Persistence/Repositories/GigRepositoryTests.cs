@@ -60,5 +60,21 @@ namespace GigHub.Tests.Persistence.Repositories
             gigs.Should().BeEmpty();
         }
 
+
+        [Fact]
+        public void GetUpcomingGigsByArtist_GigIsForADifferentArtist_ShouldNotBeReturned()
+        {
+            var gig = new Gig()
+            {
+                DateTime = DateTime.Now.AddDays(1),
+                ArtistId = "1"
+            };
+
+            _mockGigs.SetSource(new[] { gig });
+
+            var gigs = _repository.GetUpcomingGigsByArtist(gig.ArtistId + "-");
+
+            gigs.Should().BeEmpty();
+        }
     }
 }
