@@ -1,6 +1,6 @@
 ﻿using GigHub.Core.Dtos;
 using GigHub.Core.Models;
-using GigHub.Persistence;
+using GigHub.Core.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +10,15 @@ namespace GigHub.Controllers.API
     [Route("api/attendances")]
     [ApiController]
     [Authorize]
-    public class AttendancesController : ControllerBase
+    public class AttendancesController : Controller
     {
-        private ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private IUnitOfWork _unitOfWork;
 
-
-        public AttendancesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AttendancesController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork)
         {
-            _context = context;
+
+            _unitOfWork = unitOfWork;
             _userManager = userManager;
         }
 
@@ -28,7 +28,8 @@ namespace GigHub.Controllers.API
             var userId = _userManager.GetUserId(User);
 
 
-            if (_context.Attendances.Any(a => a.AttendeeId == userId && a.GigId == dto.GigId))
+
+            if (_unitOfWork.Attendances.GetAttendance(dto.GigId, userId) != null)
             {
                 return BadRequest("The attendance already exists.");
             }
@@ -39,8 +40,9 @@ namespace GigHub.Controllers.API
                 AttendeeId = userId
             };
 
-            _context.Attendances.Add(attendance);
-            _context.SaveChanges();
+            _unitOfWork.Attendances.Add(attendance);
+            // _unitOfWork.Attendances.
+            _unitOfWork.Complete();
 
             return Ok();
         }
@@ -50,16 +52,16 @@ namespace GigHub.Controllers.API
         {
             var userId = _userManager.GetUserId(User);
 
-            var attendence = _context.Attendances
-                .SingleOrDefault(a => a.AttendeeId == userId && a.GigId == id);
+            var attendence = _unitOfWork.Attendances.GetAttendance(id, userId);
+
 
             if (attendence == null)
             {
                 return NotFound();
             }
 
-            _context.Attendances.Remove(attendence);
-            _context.SaveChanges();
+            _unitOfWork.Attendances.Remove(attendence);
+            _unitOfWork.Complete();
 
             return Ok(id);
         }
