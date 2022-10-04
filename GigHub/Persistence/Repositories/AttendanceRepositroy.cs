@@ -6,9 +6,9 @@ namespace GigHub.Repositories
 {
     public class AttendanceRepositroy : IAttendanceRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
-        public AttendanceRepositroy(ApplicationDbContext context)
+        public AttendanceRepositroy(IApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

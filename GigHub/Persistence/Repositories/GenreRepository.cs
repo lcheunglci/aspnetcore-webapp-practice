@@ -6,9 +6,9 @@ namespace GigHub.Repositories
 {
     public class GenreRepository : IGenreRepository
     {
-        ApplicationDbContext _context;
+        IApplicationDbContext _context;
 
-        public GenreRepository(ApplicationDbContext context)
+        public GenreRepository(IApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

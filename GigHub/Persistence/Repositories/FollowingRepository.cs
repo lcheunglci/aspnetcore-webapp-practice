@@ -6,9 +6,9 @@ namespace GigHub.Repositories
 {
     public class FollowingRepository : IFollowingRepository
     {
-        ApplicationDbContext _context;
+        IApplicationDbContext _context;
 
-        public FollowingRepository(ApplicationDbContext context)
+        public FollowingRepository(IApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
