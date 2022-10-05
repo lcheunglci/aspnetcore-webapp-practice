@@ -28,7 +28,7 @@ namespace GigHub.Repositories
                     .ThenInclude(g => g.Genre)
                 .Include(a => a.Gig)
                     .ThenInclude(g => g.Artist)
-                .Where(a => a.AttendeeId == userId)
+                .Where(a => a.AttendeeId == userId && a.Gig.DateTime > DateTime.Now)
                 .Select(a => a.Gig)
                 .ToList();
         }
