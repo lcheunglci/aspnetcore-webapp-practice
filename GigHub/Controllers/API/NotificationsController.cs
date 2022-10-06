@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using GigHub.Core.Dtos;
 using GigHub.Core.Models;
-using GigHub.Persistence;
+using GigHub.Core.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GigHub.Controllers.API
 {
@@ -14,28 +13,22 @@ namespace GigHub.Controllers.API
     [Authorize]
     public class NotificationsController : ControllerBase
     {
-        private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
         private UserManager<ApplicationUser> _userManager;
         private IMapper _mapper;
 
-        public NotificationsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public NotificationsController(UserManager<ApplicationUser> userManager, IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public IEnumerable<NotificationDto> GetNewNotifications()
         {
             var userId = _userManager.GetUserId(User);
-            var notifications = _context.UserNotifications
-                .Include(un => un.Notification)
-                .ThenInclude(n => n.Gig)
-                .ThenInclude(g => g.Artist)
-                .Where(un => un.UserId == userId && !un.IsRead)
-                .Select(un => un.Notification)
-                .ToList();
+            var notifications = _unitOfWork.Notifications.GetNewNotificationsFor(userId);
 
             // note we are not invoking Map, but passing a reference to it
             return notifications.Select(_mapper.Map<Notification, NotificationDto>);
@@ -45,13 +38,14 @@ namespace GigHub.Controllers.API
         public IActionResult MarkAsRead()
         {
             var userId = _userManager.GetUserId(User);
-            var notifications = _context.UserNotifications
-                .Where(un => un.UserId == userId && !un.IsRead)
-                .ToList();
+            var notifications = _unitOfWork.UserNotifications.GetUserNotificationsFor(userId);
 
-            notifications.ForEach(n => n.Read());
+            foreach (var notification in notifications)
+            {
+                notification.Read();
+            }
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return Ok();
         }

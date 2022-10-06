@@ -18,8 +18,8 @@ namespace GigHub.Controllers.API
         public AttendancesController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork)
         {
 
-            _unitOfWork = unitOfWork;
-            _userManager = userManager;
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         [HttpPost]

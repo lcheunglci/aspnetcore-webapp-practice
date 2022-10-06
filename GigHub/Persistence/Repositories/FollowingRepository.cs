@@ -13,10 +13,20 @@ namespace GigHub.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public void Add(Following following)
+        {
+            _context.Followings.Add(following);
+        }
+
         public Following GetFollowing(string artistId, string userId)
         {
             return _context.Followings
                                 .SingleOrDefault(f => f.FolloweeId == artistId && f.FollowerId == userId);
+        }
+
+        public void Remove(Following following)
+        {
+            _context.Followings.Remove(following);
         }
     }
 }

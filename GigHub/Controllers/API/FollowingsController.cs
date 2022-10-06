@@ -1,6 +1,6 @@
 ﻿using GigHub.Core.Dtos;
 using GigHub.Core.Models;
-using GigHub.Persistence;
+using GigHub.Core.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +12,13 @@ namespace GigHub.Controllers.API
     [Authorize]
     public class FollowingsController : ControllerBase
     {
-        private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
         private UserManager<ApplicationUser> _userManager;
 
-        public FollowingsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public FollowingsController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork)
         {
-            _context = context;
-            _userManager = userManager;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         [HttpPost]
@@ -26,7 +26,7 @@ namespace GigHub.Controllers.API
         {
             var userId = _userManager.GetUserId(User);
 
-            if (_context.Followings.Any(f => f.FollowerId == userId || f.FolloweeId == dto.FolloweeId))
+            if (_unitOfWork.Followings.GetFollowing(dto.FolloweeId, userId) != null)
             {
                 return BadRequest("Following already exists.");
             }
@@ -37,27 +37,27 @@ namespace GigHub.Controllers.API
                 FolloweeId = dto.FolloweeId
             };
 
-            _context.Followings.Add(following);
-            _context.SaveChanges();
+            _unitOfWork.Followings.Add(following);
+
+            _unitOfWork.Complete();
 
             return Ok();
         }
 
         [HttpDelete]
-        public IActionResult Unfollow(string id)
+        public IActionResult Unfollow(string artistId)
         {
             var userId = _userManager.GetUserId(User);
 
-            var following = _context.Followings
-                .SingleOrDefault(f => f.FollowerId == userId && f.FolloweeId == id);
+            var following = _unitOfWork.Followings.GetFollowing(artistId, userId);
 
             if (following == null)
                 return NotFound();
 
-            _context.Followings.Remove(following);
-            _context.SaveChanges();
+            _unitOfWork.Followings.Remove(following);
+            _unitOfWork.Complete();
 
-            return Ok(id);
+            return Ok(artistId);
         }
 
 
