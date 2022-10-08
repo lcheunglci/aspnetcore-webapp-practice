@@ -22,11 +22,6 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-      <InternalsVisibleTo Include="GigHub" />
-  </ItemGroup>
-
-
     <ItemGroup>
     <ProjectReference Include="..\GigHub\GigHub.csproj" />
   </ItemGroup>
