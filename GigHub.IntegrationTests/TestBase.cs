@@ -15,7 +15,7 @@ namespace GigHub.IntegrationTests
             _trans = new TransactionScope();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             // Global Clean up happens here.  Called after every test.
             _trans.Dispose();
